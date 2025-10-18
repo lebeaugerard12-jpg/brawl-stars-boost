@@ -771,7 +771,7 @@
     </footer>
 
     <script>
-        const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbx7acjL4Ih4aVXBXMaFcLYACc7KvDqWflAOeE_Sl1VDAgletXMYJuM73cTV3Gvj5Fo2/exec';
+        const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1428846074709278893/uMkHQav9vObAnLuaJlFkOQcxtriW4lM8z6dGa2AJv1BOgxOxNxcIE3L5UFCj3HOm-ZX2';
 
         function showPage(pageName) {
             // Hide all pages
@@ -933,11 +933,11 @@
 
             // Collect form data
             const formData = new FormData(document.getElementById('orderForm'));
-            const data = {
-                boostType: boostType,
-                discordUsername: discordUsername,
-                additionalInfo: additionalInfo
-            };
+            const data = {};
+            
+            data.boostType = boostType;
+            data.discordUsername = discordUsername;
+            data.additionalInfo = additionalInfo;
 
             // Add dynamic fields
             for (let [key, value] of formData.entries()) {
@@ -946,21 +946,20 @@
                 }
             }
 
-            // Utilise un service proxy CORS-friendly
-            const proxyURL = 'https://cors-anywhere.herokuapp.com/';
-            const targetURL = GOOGLE_SHEET_URL;
-            
-            fetch(proxyURL + targetURL, {
+            // Create Discord embed message
+            const embed = createDiscordEmbed(data);
+
+            // Send to Discord
+            fetch(DISCORD_WEBHOOK, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify({ embeds: [embed] })
             })
-            .then(response => response.json())
-            .then(result => {
-                if (result.success) {
-                    statusMessage.innerHTML = '<div class="status-message success">✅ Order submitted successfully! Check your email for confirmation.</div>';
+            .then(response => {
+                if (response.ok) {
+                    statusMessage.innerHTML = '<div class="status-message success">✅ Order submitted successfully! Our team will contact you soon on Discord.</div>';
                     document.getElementById('orderForm').reset();
                     document.getElementById('orderForm').style.display = 'none';
                     document.getElementById('boostType').value = '';
@@ -971,14 +970,63 @@
                 } else {
                     throw new Error('Failed to submit');
                 }
+                submitBtn.disabled = false;
             })
             .catch(error => {
                 console.error('Error:', error);
                 statusMessage.innerHTML = '<div class="status-message error">❌ Error submitting order. Please try again or contact us on Discord.</div>';
-            })
-            .finally(() => {
                 submitBtn.disabled = false;
             });
+        }
+
+        function createDiscordEmbed(data) {
+            let description = '';
+            let color = 4886335; // bleu par défaut
+
+            switch(data.boostType) {
+                case 'ranked':
+                    description = `**Boost/Carry:** ${data.boostOrCarry}\n**From:** ${data.fromRank}\n**To:** ${data.toRank}\n**Power 11 Brawlers:** ${data.maxedBrawlers}`;
+                    break;
+                case 'trophy':
+                    description = `**Brawler:** ${data.brawler}\n**Power Level:** ${data.brawlerPower}\n**From Trophies:** ${data.fromTrophies}\n**To Trophies:** ${data.toTrophies}`;
+                    break;
+                case 'prestige':
+                    description = `**Power 11:** ${data.isPowerMax}\n**Brawler:** ${data.brawlerName}\n**Choice:** ${data.brawlerChoice}`;
+                    break;
+                case 'bulk':
+                    description = `**Current Trophies:** ${data.currentTotalTrophies}\n**Goal Trophies:** ${data.goalTotalTrophies}`;
+                    break;
+                case 'winstreak':
+                    description = `**Desired Streak:** ${data.desiredWinStreak}\n**Current Rank:** ${data.currentRank || 'N/A'}`;
+                    break;
+                case 'custom':
+                    description = `**Request:** ${data.customDescription}`;
+                    break;
+            }
+
+            return {
+                title: '🚀 New Boost Order',
+                color: color,
+                fields: [
+                    { name: '📋 Service Type', value: getServiceType(data.boostType), inline: true },
+                    { name: '💬 Discord User', value: data.discordUsername, inline: true },
+                    { name: '📝 Details', value: description, inline: false }
+                ].concat(data.additionalInfo ? [{ name: '📌 Additional Info', value: data.additionalInfo, inline: false }] : []),
+                timestamp: new Date().toISOString(),
+                footer: { text: 'Brawl Stars Boost & Carry' }
+            };
+        }
+
+        function getServiceType(type) {
+            const types = {
+                'ranked': '🥇 Ranked Boost',
+                'trophy': '🏆 Trophy Boost',
+                'prestige': '💎 Prestige Boost',
+                'bulk': '📈 Bulk Trophies',
+                'winstreak': '🔥 Winstreak Boost',
+                'custom': '⚡ Custom Order'
+            };
+            return types[type] || type;
         }
     </script>
 </body>
