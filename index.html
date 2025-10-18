@@ -771,7 +771,7 @@
     </footer>
 
     <script>
-        const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyvwKVQsPBi7u3RuKCk4hV2FufBmU4KPsLl5U1Tu3wfjfMEEFiqnG7P4f57SxfxE7Xw/exec';
+        const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbx7acjL4Ih4aVXBXMaFcLYACc7KvDqWflAOeE_Sl1VDAgletXMYJuM73cTV3Gvj5Fo2/exec';
 
         function showPage(pageName) {
             // Hide all pages
@@ -946,9 +946,15 @@
                 }
             }
 
-            // Send to Google Sheet
-            fetch(GOOGLE_SHEET_URL, {
+            // Utilise un service proxy CORS-friendly
+            const proxyURL = 'https://cors-anywhere.herokuapp.com/';
+            const targetURL = GOOGLE_SHEET_URL;
+            
+            fetch(proxyURL + targetURL, {
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(data)
             })
             .then(response => response.json())
