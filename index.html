@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brawl Stars Boost & Carry</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #4a9eff;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(74, 158, 255, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .nav-brand h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, #4a9eff, #00d4aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-tab {
+            padding: 0.8rem 1.5rem;
+            background: rgba(74, 158, 255, 0.1);
+            border: 2px solid transparent;
+            border-radius: 25px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-tab:hover {
+            background: rgba(74, 158, 255, 0.2);
+            border-color: #4a9eff;
+            transform: translateY(-2px);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(45deg, #4a9eff, #00d4aa);
+            border-color: #4a9eff;
+            box-shadow: 0 5px 20px rgba(74, 158, 255, 0.4);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(74, 158, 255, 0.1), rgba(0, 212, 170, 0.1));
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(74, 158, 255, 0.3);
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #4a9eff, #00d4aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: #b8c5d6;
+        }
+
+        .discord-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #7289da, #5865f2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(114, 137, 218, 0.4);
+        }
+
+        .discord-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(114, 137, 218, 0.6);
+        }
+
+        /* Section Header */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #4a9eff, #00d4aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: #b8c5d6;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-card {
+            background: rgba(26, 26, 46, 0.8);
+            border: 2px solid rgba(74, 158, 255, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: #4a9eff;
+            box-shadow: 0 10px 30px rgba(74, 158, 255, 0.3);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #4a9eff;
+        }
+
+        .service-card p {
+            color: #b8c5d6;
+        }
+
+        /* Pricing Tables */
+        .price-section {
+            background: rgba(26, 26, 46, 0.8);
+            border: 2px solid rgba(74, 158, 255, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .price-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #4a9eff;
+            text-align: center;
+        }
+
+        .price-table {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .price-row:hover {
+            background: rgba(74, 158, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .price {
+            font-weight: bold;
+            color: #00d4aa;
+            font-size: 1.1rem;
+        }
+
+        /* Order Form */
+        .order-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(26, 26, 46, 0.8);
+            border: 2px solid rgba(74, 158, 255, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(74, 158, 255, 0.1);
+        }
+
+        .boost-selector {
+            margin-bottom: 2rem;
+        }
+
+        .boost-selector label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: bold;
+            color: #4a9eff;
+            font-size: 1.1rem;
+        }
+
+        .boost-select, .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(15, 15, 35, 0.8);
+            border: 2px solid rgba(74, 158, 255, 0.3);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .boost-select:focus, .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: #4a9eff;
+            box-shadow: 0 0 15px rgba(74, 158, 255, 0.4);
+        }
+
+        .order-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+            color: #4a9eff;
+        }
+
+        .required {
+            color: #ff6b6b;
+        }
+
+        .dynamic-fields {
+            background: rgba(74, 158, 255, 0.05);
+            border: 1px solid rgba(74, 158, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .submit-btn {
+            padding: 1.1rem 2rem;
+            background: linear-gradient(45deg, #4a9eff, #00d4aa);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(74, 158, 255, 0.4);
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 158, 255, 0.6);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .status-message {
+            margin-top: 1rem;
+            padding: 1.2rem;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: bold;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .status-message.success {
+            background: rgba(0, 212, 170, 0.2);
+            border: 2px solid #00d4aa;
+            color: #00d4aa;
+        }
+
+        .status-message.error {
+            background: rgba(255, 107, 107, 0.2);
+            border: 2px solid #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .status-message.loading {
+            background: rgba(74, 158, 255, 0.2);
+            border: 2px solid #4a9eff;
+            color: #4a9eff;
+        }
+
+        /* Payment Info */
+        .payment-info {
+            background: rgba(26, 26, 46, 0.8);
+            border: 2px solid rgba(0, 212, 170, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .payment-info h3 {
+            color: #00d4aa;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .payment-email {
+            display: inline-block;
+            background: rgba(0, 212, 170, 0.1);
+            border: 1px solid rgba(0, 212, 170, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            color: #00d4aa;
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+
+        /* FAQ */
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .faq-item {
+            background: rgba(26, 26, 46, 0.8);
+            border: 2px solid rgba(74, 158, 255, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: #4a9eff;
+            box-shadow: 0 5px 20px rgba(74, 158, 255, 0.2);
+        }
+
+        .faq-item h3 {
+            color: #4a9eff;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .faq-item p {
+            color: #b8c5d6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(74, 158, 255, 0.1), rgba(0, 212, 170, 0.1));
+            border-radius: 20px;
+            border: 1px solid rgba(74, 158, 255, 0.3);
+            margin-top: 3rem;
+        }
+
+        .cta-section h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #4a9eff;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #4a9eff, #00d4aa);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(74, 158, 255, 0.4);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 158, 255, 0.6);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(15, 15, 35, 0.95);
+            border-top: 2px solid #4a9eff;
+            padding: 2rem;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            color: #b8c5d6;
+        }
+
+        .footer-discord {
+            color: #4a9eff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        .footer-discord:hover {
+            color: #00d4aa;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .price-row {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>🏆 Brawl Stars Boost & Carry</h1>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-tab active" onclick="showPage('accueil')">🏠 Accueil</button>
+                <button class="nav-tab" onclick="showPage('prices')">💰 Prices</button>
+                <button class="nav-tab" onclick="showPage('order')">📦 Order</button>
+                <button class="nav-tab" onclick="showPage('faq')">❓ FAQ</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- PAGE ACCUEIL -->
+        <div id="accueil" class="page active">
+            <section class="hero">
+                <h2>⭐ Professional Brawl Stars Boosting Services</h2>
+                <p>Get your trophies, ranks, and prestige boosted by professional players. Fast, safe, and reliable!</p>
+                <a href="https://discord.gg/yyRY4ZFw" target="_blank" class="discord-btn">💬 Join Our Discord Server</a>
+            </section>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>🥇 Ranked Boost</h3>
+                    <p>Climb the ranked ladder with our expert players</p>
+                </div>
+                <div class="service-card">
+                    <h3>🏆 Trophy Boost</h3>
+                    <p>Increase your brawler trophies quickly and safely</p>
+                </div>
+                <div class="service-card">
+                    <h3>💎 Prestige Boost</h3>
+                    <p>Unlock prestige levels for your favorite brawlers</p>
+                </div>
+                <div class="service-card">
+                    <h3>📈 Bulk Trophies</h3>
+                    <p>Boost your total trophy count efficiently</p>
+                </div>
+                <div class="service-card">
+                    <h3>🔥 Winstreak Boost</h3>
+                    <p>Achieve impressive win streaks</p>
+                </div>
+                <div class="service-card">
+                    <h3>⚡ Custom Order</h3>
+                    <p>Special requests and custom boosting services</p>
+                </div>
+            </div>
+
+            <section class="cta-section">
+                <h3>Ready to Get Started?</h3>
+                <div class="cta-buttons">
+                    <button class="cta-btn" onclick="showPage('prices')">💰 View Prices</button>
+                    <button class="cta-btn" onclick="showPage('order')">📦 Place Order</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGE PRICES -->
+        <div id="prices" class="page">
+            <div class="section-header">
+                <h2>💰 Our Prices</h2>
+                <p>Professional Brawl Stars boosting services with transparent pricing</p>
+            </div>
+
+            <div class="price-section">
+                <h3>🏆 Trophy Boost</h3>
+                <div class="price-table">
+                    <div class="price-row">
+                        <span>0 → 750 trophies</span>
+                        <span class="price">€1 per 50 trophies</span>
+                    </div>
+                    <div class="price-row">
+                        <span>750 → 1000 trophies</span>
+                        <span class="price">€3 per 50 trophies</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="price-section">
+                <h3>💎 Prestige</h3>
+                <div class="price-table">
+                    <div class="price-row">
+                        <span>Prestige (our choice of brawler)</span>
+                        <span class="price">€37</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Prestige (customer's choice)</span>
+                        <span class="price">Custom quote</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="price-section">
+                <h3>🥇 Ranked Boost</h3>
+                <div class="price-table">
+                    <div class="price-row"><span>Bronze I → Bronze II</span><span class="price">€0.5</span></div>
+                    <div class="price-row"><span>Bronze II → Bronze III</span><span class="price">€0.5</span></div>
+                    <div class="price-row"><span>Bronze III → Silver I</span><span class="price">€0.5</span></div>
+                    <div class="price-row"><span>Silver I → Silver II</span><span class="price">€1</span></div>
+                    <div class="price-row"><span>Silver II → Silver III</span><span class="price">€1</span></div>
+                    <div class="price-row"><span>Silver III → Gold I</span><span class="price">€1</span></div>
+                    <div class="price-row"><span>Gold I → Gold II</span><span class="price">€1.5</span></div>
+                    <div class="price-row"><span>Gold II → Gold III</span><span class="price">€1.5</span></div>
+                    <div class="price-row"><span>Gold III → Diamond I</span><span class="price">€1.5</span></div>
+                    <div class="price-row"><span>Diamond I → Diamond II</span><span class="price">€2</span></div>
+                    <div class="price-row"><span>Diamond II → Diamond III</span><span class="price">€2</span></div>
+                    <div class="price-row"><span>Diamond III → Mythic I</span><span class="price">€2.5</span></div>
+                    <div class="price-row"><span>Mythic I → Mythic II</span><span class="price">€4</span></div>
+                    <div class="price-row"><span>Mythic II → Mythic III</span><span class="price">€5</span></div>
+                    <div class="price-row"><span>Mythic III → Legendary I</span><span class="price">€6</span></div>
+                    <div class="price-row"><span>Legendary I → Legendary II</span><span class="price">€12</span></div>
+                    <div class="price-row"><span>Legendary II → Legendary III</span><span class="price">€15</span></div>
+                    <div class="price-row"><span>Legendary III → Master I</span><span class="price">€17</span></div>
+                    <div class="price-row"><span>Master I → Master II</span><span class="price">€42</span></div>
+                    <div class="price-row"><span>Master II → Master III</span><span class="price">€60</span></div>
+                    <div class="price-row"><span>Master III → Pro</span><span class="price">Custom quote</span></div>
+                </div>
+            </div>
+
+            <div class="price-section">
+                <h3>📈 Other Services</h3>
+                <div class="price-table">
+                    <div class="price-row"><span>Bulk Trophies</span><span class="price">Custom quote</span></div>
+                    <div class="price-row"><span>Winstreak Boost</span><span class="price">Custom quote</span></div>
+                    <div class="price-row"><span>Custom Orders</span><span class="price">Custom quote</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE ORDER -->
+        <div id="order" class="page">
+            <div class="section-header">
+                <h2>📦 Place Your Order</h2>
+                <p>Select your boost type and fill out the form</p>
+            </div>
+
+            <div class="order-container">
+                <div class="boost-selector">
+                    <label for="boostType">Choose Boost Type:</label>
+                    <select id="boostType" class="boost-select" onchange="generateForm()">
+                        <option value="">-- Select Boost Type --</option>
+                        <option value="ranked">🥇 Ranked Boost</option>
+                        <option value="trophy">🏆 Trophy Boost</option>
+                        <option value="prestige">💎 Prestige Boost</option>
+                        <option value="bulk">📈 Bulk Trophies</option>
+                        <option value="winstreak">🔥 Winstreak Boost</option>
+                        <option value="custom">⚡ Custom Order</option>
+                    </select>
+                </div>
+
+                <form id="orderForm" class="order-form" style="display: none;" onsubmit="submitForm(event)">
+                    <div id="dynamicFields" class="dynamic-fields"></div>
+                    
+                    <div class="form-group">
+                        <label>Discord Username <span class="required">*</span></label>
+                        <input type="text" id="discordUsername" name="discordUsername" placeholder="Your Discord username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Additional Information</label>
+                        <textarea id="additionalInfo" name="additionalInfo" placeholder="Any special requests or notes..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">🚀 Submit Order</button>
+                </form>
+
+                <div id="statusMessage"></div>
+            </div>
+
+            <div class="payment-info">
+                <h3>💳 Payment Information</h3>
+                <p>After submitting your order, you'll receive a PayPal payment link</p>
+                <div class="payment-email">hugo.dl2009@gmail.com</div>
+                <p style="margin-top: 1rem; color: #ff9f43;">Payment must be completed before we start working on your order</p>
+            </div>
+        </div>
+
+        <!-- PAGE FAQ -->
+        <div id="faq" class="page">
+            <div class="section-header">
+                <h2>❓ Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <h3>🤔 What's the Difference Between Boosting & Carrying?</h3>
+                    <p><strong>Boosting:</strong> A booster logs into your account to complete your order. Once done, they provide proof (a video showing them logging out and removing the account from their device).</p>
+                    <p><strong>Carrying:</strong> Instead of logging into your account, 2 experienced boosters play alongside you to secure wins and complete your order.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>⏱️ How Long Will My Order Take?</h3>
+                    <p>We aim to complete every order as quickly as possible while keeping quality a top priority. The time depends on factors like the current meta, available maps, your chosen brawler, and the size of your order.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>⚡ Can I Make Custom Orders?</h3>
+                    <p>Yes! We accept custom orders for any specific requirements you might have. Simply select "Custom Order" in our order form and describe what you need. We'll provide a personalized quote based on your request.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>🔐 How Do I Know You Won't Steal My Account?</h3>
+                    <p>We are a professional server run by experienced players. All accounts are protected by Supercell ID, which prevents malicious recovery. Our reputation depends on trust, so we prioritize long-term clients over quick scams.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>💳 Can I Pay Afterwards?</h3>
+                    <p>No. Payment is always required upfront. In the past, some clients tried to leave without paying after their service was completed, so this policy ensures fairness for everyone.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>🛡️ Is This A Scam?</h3>
+                    <p>We treat this server as a real business. Scamming would destroy our reputation. Our priority is to provide reliable service and build long-term trust with customers. You can check our Discord server for testimonials and reviews from satisfied clients.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>💰 How do I pay?</h3>
+                    <p>After submitting your order, you'll receive a PayPal link for payment to hugo.dl2009@gmail.com. Payment must be completed before we start working on your order.</p>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <h3>Still Have Questions?</h3>
+                <a href="https://discord.gg/yyRY4ZFw" target="_blank" class="cta-btn">💬 Join Our Discord</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2025 Brawl Stars Boost & Carry</p>
+            <a href="https://discord.gg/yyRY4ZFw" target="_blank" class="footer-discord">
+                💬 Join Our Discord
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyvwKVQsPBi7u3RuKCk4hV2FufBmU4KPsLl5U1Tu3wfjfMEEFiqnG7P4f57SxfxE7Xw/exec';
+
+        function showPage(pageName) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Show selected page
+            document.getElementById(pageName).classList.add('active');
+
+            // Update nav tabs
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Reset form when leaving order page
+            if (pageName !== 'order') {
+                document.getElementById('orderForm').style.display = 'none';
+                document.getElementById('boostType').value = '';
+            }
+        }
+
+        function generateForm() {
+            const boostType = document.getElementById('boostType').value;
+            const dynamicFields = document.getElementById('dynamicFields');
+            const orderForm = document.getElementById('orderForm');
+
+            if (!boostType) {
+                orderForm.style.display = 'none';
+                return;
+            }
+
+            let html = '';
+
+            switch(boostType) {
+                case 'ranked':
+                    html = `
+                        <div class="form-group">
+                            <label>Boost or Carry? <span class="required">*</span></label>
+                            <select id="boostOrCarry" name="boostOrCarry" required>
+                                <option value="">-- Select --</option>
+                                <option value="Boost">Boost (we log into your account)</option>
+                                <option value="Carry">Carry (we play with you)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>From Rank <span class="required">*</span></label>
+                            <input type="text" id="fromRank" name="fromRank" placeholder="e.g., Bronze I" required>
+                        </div>
+                        <div class="form-group">
+                            <label>To Rank <span class="required">*</span></label>
+                            <input type="text" id="toRank" name="toRank" placeholder="e.g., Silver II" required>
+                        </div>
+                        <div class="form-group">
+                            <label>How many brawlers have Power 11? <span class="required">*</span></label>
+                            <input type="number" id="maxedBrawlers" name="maxedBrawlers" min="0" placeholder="e.g., 5" required>
+                        </div>
+                    `;
+                    break;
+
+                case 'trophy':
+                    html = `
+                        <div class="form-group">
+                            <label>Brawler <span class="required">*</span></label>
+                            <input type="text" id="brawler" name="brawler" placeholder="e.g., Shelly" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Brawler Power Level <span class="required">*</span></label>
+                            <select id="brawlerPower" name="brawlerPower" required>
+                                <option value="">-- Select --</option>
+                                <option value="11">Power 11 (Required)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>From Trophies <span class="required">*</span></label>
+                            <input type="number" id="fromTrophies" name="fromTrophies" min="0" placeholder="e.g., 500" required>
+                        </div>
+                        <div class="form-group">
+                            <label>To Trophies <span class="required">*</span></label>
+                            <input type="number" id="toTrophies" name="toTrophies" min="0" placeholder="e.g., 750" required>
+                        </div>
+                    `;
+                    break;
+
+                case 'prestige':
+                    html = `
+                        <div class="form-group">
+                            <label>Is your brawler Power 11? <span class="required">*</span></label>
+                            <select id="isPowerMax" name="isPowerMax" required>
+                                <option value="">-- Select --</option>
+                                <option value="Yes">Yes (Required)</option>
+                                <option value="No">No (Cannot order)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Brawler Name <span class="required">*</span></label>
+                            <input type="text" id="brawlerName" name="brawlerName" placeholder="e.g., Colt" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Choice Type</label>
+                            <select id="brawlerChoice" name="brawlerChoice">
+                                <option value="Our choice">Our choice (€37)</option>
+                                <option value="Customer choice">Customer choice (custom quote)</option>
+                            </select>
+                        </div>
+                    `;
+                    break;
+
+                case 'bulk':
+                    html = `
+                        <div class="form-group">
+                            <label>Current Total Trophies <span class="required">*</span></label>
+                            <input type="number" id="currentTotalTrophies" name="currentTotalTrophies" min="0" placeholder="e.g., 15000" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Goal Total Trophies <span class="required">*</span></label>
+                            <input type="number" id="goalTotalTrophies" name="goalTotalTrophies" min="0" placeholder="e.g., 20000" required>
+                        </div>
+                    `;
+                    break;
+
+                case 'winstreak':
+                    html = `
+                        <div class="form-group">
+                            <label>Desired Win Streak <span class="required">*</span></label>
+                            <input type="number" id="desiredWinStreak" name="desiredWinStreak" min="1" placeholder="e.g., 10" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Current Rank/Trophies</label>
+                            <input type="text" id="currentRank" name="currentRank" placeholder="e.g., Gold II or 800 trophies">
+                        </div>
+                    `;
+                    break;
+
+                case 'custom':
+                    html = `
+                        <div class="form-group">
+                            <label>Description of your request <span class="required">*</span></label>
+                            <textarea id="customDescription" name="customDescription" placeholder="Please describe exactly what you need..." required></textarea>
+                        </div>
+                    `;
+                    break;
+            }
+
+            dynamicFields.innerHTML = html;
+            orderForm.style.display = 'flex';
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+
+            const boostType = document.getElementById('boostType').value;
+            const discordUsername = document.getElementById('discordUsername').value;
+            const additionalInfo = document.getElementById('additionalInfo').value;
+            const statusMessage = document.getElementById('statusMessage');
+            const submitBtn = document.getElementById('submitBtn');
+
+            submitBtn.disabled = true;
+            statusMessage.innerHTML = '<div class="status-message loading">⏳ Submitting your order...</div>';
+
+            // Collect form data
+            const formData = new FormData(document.getElementById('orderForm'));
+            const data = {
+                boostType: boostType,
+                discordUsername: discordUsername,
+                additionalInfo: additionalInfo
+            };
+
+            // Add dynamic fields
+            for (let [key, value] of formData.entries()) {
+                if (key !== 'discordUsername' && key !== 'additionalInfo') {
+                    data[key] = value;
+                }
+            }
+
+            // Send to Google Sheet
+            fetch(GOOGLE_SHEET_URL, {
+                method: 'POST',
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    statusMessage.innerHTML = '<div class="status-message success">✅ Order submitted successfully! Check your email for confirmation.</div>';
+                    document.getElementById('orderForm').reset();
+                    document.getElementById('orderForm').style.display = 'none';
+                    document.getElementById('boostType').value = '';
+                    document.getElementById('dynamicFields').innerHTML = '';
+                    setTimeout(() => {
+                        statusMessage.innerHTML = '';
+                    }, 5000);
+                } else {
+                    throw new Error('Failed to submit');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                statusMessage.innerHTML = '<div class="status-message error">❌ Error submitting order. Please try again or contact us on Discord.</div>';
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+            });
+        }
+    </script>
+</body>
+</html>
