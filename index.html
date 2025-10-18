@@ -1096,28 +1096,35 @@
         }
 
         function createDiscordEmbed(data) {
-            let description = '';
+            let details = '';
             let color = 4886335; // bleu par défaut
             let orderID = generateOrderID();
+            let serviceEmoji = '🎯';
 
             switch(data.boostType) {
                 case 'ranked':
-                    description = `**Boost/Carry:** ${data.boostOrCarry}\n**From:** ${data.fromRank}\n**To:** ${data.toRank}\n**Power 11 Brawlers:** ${data.maxedBrawlers}`;
+                    serviceEmoji = '🥇';
+                    details = `Boost/Carry: **${data.boostOrCarry}**\nFrom: **${data.fromRank}**\nTo: **${data.toRank}**\nPower 11 Brawlers: **${data.maxedBrawlers}**`;
                     break;
                 case 'trophy':
-                    description = `**Brawler:** ${data.brawler}\n**Power Level:** ${data.brawlerPower}\n**From Trophies:** ${data.fromTrophies}\n**To Trophies:** ${data.toTrophies}`;
+                    serviceEmoji = '🏆';
+                    details = `Brawler: **${data.brawler}**\nPower Level: **${data.brawlerPower}**\nFrom Trophies: **${data.fromTrophies}**\nTo Trophies: **${data.toTrophies}**`;
                     break;
                 case 'prestige':
-                    description = `**Power 11:** ${data.isPowerMax}\n**Brawler:** ${data.brawlerName}\n**Choice:** ${data.brawlerChoice}`;
+                    serviceEmoji = '💎';
+                    details = `Power 11: **${data.isPowerMax}**\nBrawler: **${data.brawlerName}**\nChoice: **${data.brawlerChoice}**`;
                     break;
                 case 'bulk':
-                    description = `**Current Trophies:** ${data.currentTotalTrophies}\n**Goal Trophies:** ${data.goalTotalTrophies}`;
+                    serviceEmoji = '📈';
+                    details = `Current Trophies: **${data.currentTotalTrophies}**\nGoal Trophies: **${data.goalTotalTrophies}**`;
                     break;
                 case 'winstreak':
-                    description = `**Desired Streak:** ${data.desiredWinStreak}\n**Brawler:** ${data.brawlerForWinstreak || 'Any (Standard price)'} ${data.brawlerForWinstreak ? '(More Expensive)' : ''}`;
+                    serviceEmoji = '🔥';
+                    details = `Desired Streak: **${data.desiredWinStreak}**\nBrawler: **${data.brawlerForWinstreak || 'Any (Standard price)'}** ${data.brawlerForWinstreak ? '(More Expensive)' : ''}`;
                     break;
                 case 'custom':
-                    description = `**Request:** ${data.customDescription}`;
+                    serviceEmoji = '⚡';
+                    details = `Request: **${data.customDescription}**`;
                     break;
             }
 
@@ -1125,14 +1132,61 @@
                 title: '🚀 New Boost Order',
                 color: color,
                 fields: [
-                    { name: '📊 Order ID', value: orderID, inline: true },
-                    { name: '💬 Discord User', value: data.discordUsername, inline: true },
-                    { name: '📋 Service Type', value: getServiceType(data.boostType), inline: true },
-                    { name: '💰 Status', value: '❌ Not Paid', inline: true },
-                    { name: '📝 Details', value: description, inline: false }
-                ].concat(data.additionalInfo ? [{ name: '📌 Additional Info', value: data.additionalInfo, inline: false }] : []),
+                    { 
+                        name: '━━━━━━━━━━━━━━━━━━━━━━', 
+                        value: '** **', 
+                        inline: false 
+                    },
+                    { 
+                        name: `${serviceEmoji} ORDER ID`, 
+                        value: `\`${orderID}\``, 
+                        inline: true 
+                    },
+                    { 
+                        name: '💬 DISCORD USER', 
+                        value: `**${data.discordUsername}**`, 
+                        inline: true 
+                    },
+                    { 
+                        name: '** **', 
+                        value: '** **', 
+                        inline: false 
+                    },
+                    { 
+                        name: '📋 SERVICE DETAILS', 
+                        value: details, 
+                        inline: false 
+                    },
+                    { 
+                        name: '** **', 
+                        value: '** **', 
+                        inline: false 
+                    },
+                    ...(data.additionalInfo ? [
+                        { 
+                            name: '📝 ADDITIONAL INFO', 
+                            value: `*${data.additionalInfo}*`, 
+                            inline: false 
+                        },
+                        { 
+                            name: '** **', 
+                            value: '** **', 
+                            inline: false 
+                        }
+                    ] : []),
+                    {
+                        name: '📊 STATUS UPDATES',
+                        value: '❌ = Not Paid\n✅ = Paid\n🔄 = In Progress\n✨ = Completed\n❌ = Cancelled',
+                        inline: false
+                    },
+                    { 
+                        name: '** **', 
+                        value: '** **', 
+                        inline: false 
+                    }
+                ],
                 timestamp: new Date().toISOString(),
-                footer: { text: 'Brawl Stars Boost & Carry' }
+                footer: { text: 'CB&C - Brawl Stars Boost & Carry' }
             };
         }
 
@@ -1142,7 +1196,7 @@
             for (let i = 0; i < 6; i++) {
                 id += chars.charAt(Math.floor(Math.random() * chars.length));
             }
-            return `CB-${id}`;
+            return `CB${id}`;
         }
 
         function getServiceType(type) {
