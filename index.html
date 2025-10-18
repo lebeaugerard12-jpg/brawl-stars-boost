@@ -538,7 +538,6 @@
                 <button class="nav-tab active" onclick="showPage('accueil')">🏠 Accueil</button>
                 <button class="nav-tab" onclick="showPage('prices')">💰 Prices</button>
                 <button class="nav-tab" onclick="showPage('order')">📦 Order</button>
-                <button class="nav-tab" onclick="showPage('about')">ℹ️ About Us</button>
                 <button class="nav-tab" onclick="showPage('faq')">❓ FAQ</button>
             </div>
         </div>
@@ -710,71 +709,7 @@
             </div>
         </div>
 
-        <!-- PAGE ABOUT US -->
-        <div id="about" class="page">
-            <div class="section-header">
-                <h2>ℹ️ About Us & Terms of Service</h2>
-            </div>
-
-            <div style="max-width: 900px; margin: 0 auto;">
-                <!-- Welcome Section -->
-                <div class="faq-item">
-                    <h3>✨ Welcome to CB&C ✨</h3>
-                    <p><strong>Fast • Reliable • Trusted</strong></p>
-                    <p>Looking for a safe and efficient way to get the service you need? At CB&C (Cheap Boost & Carry), we take pride in delivering <strong>top-quality</strong> results with speed, transparency, and professionalism.</p>
-                    
-                    <h4 style="color: #00d4aa; margin-top: 1.5rem;">📌 Why Choose Us?</h4>
-                    <p>✅ All orders are completed within your chosen timeframe.<br>
-                    ✅ <strong>100% completion rate</strong> — we never leave anyone hanging.<br>
-                    ✅ <strong>Refund guaranteed</strong> if your service isn't completed.<br>
-                    ✅ Your satisfaction is our <strong>#1 priority</strong> 💚</p>
-                    
-                    <p style="margin-top: 1.5rem;">Ordering is <strong>simple and secure</strong> — no complicated steps, no sketchy processes. Just browse our shop, open a quick ticket, and let our team handle the rest. We'll guide you through a safe payment, keep you updated during the process, and make sure you're fully satisfied at the end.</p>
-                </div>
-
-                <!-- TOS Section -->
-                <div class="faq-item" style="margin-top: 2rem;">
-                    <h3>📋 Terms of Service</h3>
-                    <p>Our terms of service are applicable for any services that we provide. By using our services you hereby agree to these terms.</p>
-                    
-                    <h4 style="color: #4a9eff; margin-top: 1.5rem;">Customer Responsibility</h4>
-                    <p>• You must be at least 13 years old, and comply with Discord's Terms of Service, to use our services<br>
-                    • You are aware of the risks associated with account sharing, including actions that can be taken by Supercell<br>
-                    • You are responsible for following our requirements if you choose to order<br>
-                    • <strong>For Boosts:</strong> It is Required that you do not log onto your account until the server is finished. Losses caused by disconnection are not covered by us if you break this rule<br>
-                    • <strong>For Carries:</strong> It is Required that you have a stable internet connection, and can actively play during the Carry. Repeat losses caused by you going AFK or losing connection are not covered by us<br>
-                    • Our server is not responsible for any bans, penalties, or losses resulting from account sharing or using our services<br>
-                    • The Liability falls on you (the customer) to inform us of any actions that may endanger your account during your order<br>
-                    • We will always advise that you provide live updates during your order in our tickets, so that we can assist you and prevent any possible bad actors<br>
-                    • Attempting to order directly with our third party boosters is not allowed for your safety, and will result in a ban from this server if attempted. We provide a safe environment for deals in this server ONLY</p>
-
-                    <h4 style="color: #4a9eff; margin-top: 1.5rem;">Refund Policy</h4>
-                    <p>• Refunds can be done through PayPal Payments if the order is cancelled before being started<br>
-                    • You are only eligible for a refund if no progress has been made on your order<br>
-                    • You are eligible for a partial refund in certain circumstances, determined by the progress on your order<br>
-                    • We retain the right to refuse service if you are abusive towards our staff or our boosters<br>
-                    • We retain the right to refuse service if you are unresponsive for an unreasonable period of time</p>
-
-                    <h4 style="color: #4a9eff; margin-top: 1.5rem;">Privacy Policy</h4>
-                    <p>• We may collect a limited amount of data provided from you that is associated with your Discord account. This data includes your player tag, your Supercell ID name, and your email<br>
-                    • We may screenshot or take videos of your account progress upon completion of an order, which may be used in our advertisements or to show our completed orders<br>
-                    • You may opt out of this by letting us know before or during your order<br>
-                    • Personal information in the media described above will always be blurred out</p>
-
-                    <h4 style="color: #4a9eff; margin-top: 1.5rem;">Our Guarantee</h4>
-                    <p>We guarantee that any Boost Orders will be Completed within the desired timeframe, as long as our TOS is followed. Our service has a <strong>100% completion rate for Boosts!</strong> A refund is always available if your desired service is not completed. Your Satisfaction is our Upmost Priority! If you are unsatisfied with our service, please let us know. We guarantee we will do what we can to make things right.</p>
-
-                    <p style="margin-top: 1.5rem; font-size: 0.9rem; color: #ff9f43;"><strong>⚠️ Disclaimers:</strong><br>
-                    This Service is not affiliated with, endorsed by, or associated with Supercell or Brawl Stars. ALL Intellectual Property Rights belong to the respective owners.<br>
-                    This Service Does Not Participate in the Gaming Process. We are Simply the Intermediary to Ensure The Transaction is done Safely Between the Customer and the Service Provider.</p>
-                </div>
-
-                <div class="cta-section" style="margin-top: 2rem;">
-                    <h3>Ready to Join CB&C?</h3>
-                    <a href="https://discord.gg/yyRY4ZFw" target="_blank" class="cta-btn">💬 Join Our Discord</a>
-                </div>
-            </div>
-        </div>
+        <!-- PAGE FAQ -->
         <div id="faq" class="page">
             <div class="section-header">
                 <h2>❓ Frequently Asked Questions</h2>
@@ -964,8 +899,8 @@
                             <input type="number" id="desiredWinStreak" name="desiredWinStreak" min="1" placeholder="e.g., 10" required>
                         </div>
                         <div class="form-group">
-                            <label>Brawler (Optional - More Expensive)</label>
-                            <input type="text" id="winstreakBrawler" name="winstreakBrawler" placeholder="e.g., Colt (leave empty for any)">
+                            <label>Brawler (Optional - more expensive)</label>
+                            <input type="text" id="brawlerWinstreak" name="brawlerWinstreak" placeholder="e.g., Colt (leave empty for default)">
                         </div>
                     `;
                     break;
@@ -996,17 +931,14 @@
             submitBtn.disabled = true;
             statusMessage.innerHTML = '<div class="status-message loading">⏳ Submitting your order...</div>';
 
-            // Generate 6-character order ID
-            const orderId = generateOrderId();
-
             // Collect form data
             const formData = new FormData(document.getElementById('orderForm'));
             const data = {};
             
-            data.orderId = orderId;
             data.boostType = boostType;
             data.discordUsername = discordUsername;
             data.additionalInfo = additionalInfo;
+            data.orderNumber = generateOrderNumber(); // Numéro de commande unique
 
             // Add dynamic fields
             for (let [key, value] of formData.entries()) {
@@ -1028,14 +960,14 @@
             })
             .then(response => {
                 if (response.ok) {
-                    statusMessage.innerHTML = '<div class="status-message success">✅ Order submitted successfully! Your Order ID is <strong>' + orderId + '</strong><br>Our team will contact you soon on Discord.</div>';
+                    statusMessage.innerHTML = '<div class="status-message success">✅ Order submitted successfully! Your order number is <strong>#' + data.orderNumber + '</strong>. Our team will contact you soon on Discord.</div>';
                     document.getElementById('orderForm').reset();
                     document.getElementById('orderForm').style.display = 'none';
                     document.getElementById('boostType').value = '';
                     document.getElementById('dynamicFields').innerHTML = '';
                     setTimeout(() => {
                         statusMessage.innerHTML = '';
-                    }, 8000);
+                    }, 5000);
                 } else {
                     throw new Error('Failed to submit');
                 }
@@ -1048,56 +980,97 @@
             });
         }
 
-        function generateOrderId() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let id = '';
-            for (let i = 0; i < 6; i++) {
-                id += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return id;
+        function generateOrderNumber() {
+            return Math.floor(100000 + Math.random() * 900000);
         }
 
         function createDiscordEmbed(data) {
-            let description = '';
-            let color = 4886335;
+            let fields = [];
+            let color = 4886335; // bleu par défaut
+
+            // Numéro de commande
+            fields.push({ 
+                name: '🎫 Order Number', 
+                value: '#' + data.orderNumber, 
+                inline: true 
+            });
+
+            // Type de service
+            fields.push({ 
+                name: '📋 Service Type', 
+                value: getServiceType(data.boostType), 
+                inline: true 
+            });
+
+            // Discord User
+            fields.push({ 
+                name: '💬 Discord User', 
+                value: data.discordUsername, 
+                inline: true 
+            });
+
+            // Détails spécifiques
+            fields.push({ name: '\u200b', value: '\u200b', inline: false }); // Ligne vide
 
             switch(data.boostType) {
                 case 'ranked':
-                    description = `**Boost/Carry:** ${data.boostOrCarry}\n**From:** ${data.fromRank}\n**To:** ${data.toRank}\n**Power 11 Brawlers:** ${data.maxedBrawlers}`;
+                    fields.push(
+                        { name: '⚙️ Method', value: data.boostOrCarry, inline: true },
+                        { name: '📈 From Rank', value: data.fromRank, inline: true },
+                        { name: '🎯 To Rank', value: data.toRank, inline: true },
+                        { name: '💪 Power 11 Brawlers', value: data.maxedBrawlers, inline: true }
+                    );
                     break;
                 case 'trophy':
-                    description = `**Brawler:** ${data.brawler}\n**Power Level:** ${data.brawlerPower}\n**From Trophies:** ${data.fromTrophies}\n**To Trophies:** ${data.toTrophies}`;
+                    fields.push(
+                        { name: '🎮 Brawler', value: data.brawler, inline: true },
+                        { name: '⚡ Power Level', value: data.brawlerPower, inline: true },
+                        { name: '📊 From Trophies', value: data.fromTrophies, inline: true },
+                        { name: '🏆 To Trophies', value: data.toTrophies, inline: true }
+                    );
                     break;
                 case 'prestige':
-                    description = `**Power 11:** ${data.isPowerMax}\n**Brawler:** ${data.brawlerName}\n**Choice:** ${data.brawlerChoice}`;
+                    fields.push(
+                        { name: '💪 Power 11', value: data.isPowerMax, inline: true },
+                        { name: '🎮 Brawler', value: data.brawlerName, inline: true },
+                        { name: '🎯 Choice', value: data.brawlerChoice, inline: true }
+                    );
                     break;
                 case 'bulk':
-                    description = `**Current Trophies:** ${data.currentTotalTrophies}\n**Goal Trophies:** ${data.goalTotalTrophies}`;
+                    fields.push(
+                        { name: '📊 Current Trophies', value: data.currentTotalTrophies, inline: true },
+                        { name: '🎯 Goal Trophies', value: data.goalTotalTrophies, inline: true }
+                    );
                     break;
                 case 'winstreak':
-                    description = `**Desired Streak:** ${data.desiredWinStreak}\n**Brawler:** ${data.winstreakBrawler || 'Any (Standard Price)'}`;
+                    fields.push(
+                        { name: '🔥 Desired Streak', value: data.desiredWinStreak, inline: true },
+                        { name: '🎮 Brawler', value: data.brawlerWinstreak ? data.brawlerWinstreak + ' (More Expensive)' : 'Any', inline: true }
+                    );
                     break;
                 case 'custom':
-                    description = `**Request:** ${data.customDescription}`;
+                    fields.push(
+                        { name: '📝 Request', value: data.customDescription, inline: false }
+                    );
                     break;
             }
 
+            // Infos additionnelles
+            if (data.additionalInfo) {
+                fields.push({ name: '\u200b', value: '\u200b', inline: false }); // Ligne vide
+                fields.push({ 
+                    name: '📌 Additional Information', 
+                    value: data.additionalInfo, 
+                    inline: false 
+                });
+            }
+
             return {
-                title: `🚀 NEW ORDER - #${data.orderId}`,
+                title: '🚀 NEW BOOST ORDER',
                 color: color,
-                fields: [
-                    { name: '━━━━━━━━━━━━━━━━━━━━━━', value: ' ', inline: false },
-                    { name: '📋 SERVICE TYPE', value: getServiceType(data.boostType), inline: true },
-                    { name: '💬 DISCORD USER', value: data.discordUsername, inline: true },
-                    { name: '━━━━━━━━━━━━━━━━━━━━━━', value: ' ', inline: false },
-                    { name: '📝 ORDER DETAILS', value: description, inline: false },
-                    { name: '━━━━━━━━━━━━━━━━━━━━━━', value: ' ', inline: false }
-                ].concat(data.additionalInfo ? [
-                    { name: '📌 ADDITIONAL INFO', value: data.additionalInfo, inline: false },
-                    { name: '━━━━━━━━━━━━━━━━━━━━━━', value: ' ', inline: false }
-                ] : []),
+                fields: fields,
                 timestamp: new Date().toISOString(),
-                footer: { text: 'Brawl Stars Boost & Carry | CB&C' }
+                footer: { text: 'Brawl Stars Boost & Carry | Order Management' }
             };
         }
 
